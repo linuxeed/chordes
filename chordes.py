@@ -24,6 +24,7 @@ if len(sys.argv) <= 2:
 fin  = open(sys.argv[1], 'r')
 fout = open(sys.argv[2], 'w')
 
+print('<meta charset="utf-8">', file=fout)
 for line in fin:
 	for word in line.split():
 		brackets = word[0] == '(' and word[-1] == ')'
@@ -32,9 +33,9 @@ for line in fin:
 			print('(', file=fout)
 		
 		if word[0].lower() in notes:
-			print('<img src="{}" height="{}">'.format(getChordURL(word), 60), file=fout)
+			print('<img src="{}" height="{}">'.format(getChordURL(word), 40), file=fout)
 		else:
-			print('<font face="sans-serif" size="{}">{}</font>'.format(5, word), file=fout)
+			print('<font face="sans-serif" size="{}">{}</font>'.format(3, word), file=fout)
 		
 		if brackets:
 			print(')', file=fout)
