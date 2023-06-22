@@ -1,3 +1,5 @@
+// This is an outdated tool. Use the Python version.
+
 #include <iostream>
 #include <sstream>
 
