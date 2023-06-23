@@ -24,7 +24,9 @@ if len(sys.argv) <= 2:
 fin  = open(sys.argv[1], 'r')
 fout = open(sys.argv[2], 'w')
 
-print('<meta charset="utf-8">', file=fout)
+print('<meta charset="utf-8">', file=fout) # fix charset
+print('<font face="sans-serif" size="3">', file=fout) # sans font
+
 for line in fin:
 	for word in line.split():
 		brackets = word[0] == '(' and word[-1] == ')'
@@ -33,16 +35,18 @@ for line in fin:
 			print('(', file=fout)
 		
 		if word[0].lower() in notes:
-			print('<img src="{}" height="{}">'.format(getChordURL(word), 40), file=fout)
+			print(f'<img src="{getChordURL(word)}" height="40">', file=fout)
 		else:
-			print('<font face="sans-serif" size="{}">{}</font>'.format(3, word), file=fout)
+			print(word, file=fout)
 		
 		if brackets:
 			print(')', file=fout)
 	
 	print('<br>', file=fout)
 
+print('</font>', file=fout) # end sans font
+
 fin.close()
 fout.close()
 
-print('Check result: {}!'.format(sys.argv[2]))
+print(f'Check result: {sys.argv[2]}!')
