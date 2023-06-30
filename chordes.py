@@ -1,19 +1,20 @@
 import sys
 
 NOTES = "abcdefgh"
+
 def getChordURL(chord):
-	res = 'https://tuneronline.ru/images/chords/guitar/max/'
+	chord = chord.lower()
 	
+	res = 'https://tuneronline.ru/images/chords/guitar/max/'
 	for char in chord:
-		char = char.lower()
 		if char == '#' or char == '♯':
 			res += 'diez'
 		elif char == 'b' or char == '♭':
 			res += 'b'
 		else:
 			res += char
-	
 	res += '.jpg'
+	
 	return res
 
 if len(sys.argv) <= 2:
@@ -31,8 +32,7 @@ for line in fin:
 	print('<tr><td>', file=fout)
 	
 	for word in line.split():
-		brackets = word[0] == '(' and word[-1] == ')'
-		if brackets:
+		if word[0] == '(' and word[-1] == ')':
 			if not word[1].lower() in NOTES:
 				print(word, file=fout)
 		else:
@@ -55,8 +55,8 @@ for line in fin:
 	
 	print('</td></tr>', file=fout)
 
-print('</font>', file=fout)
 print('</table>', file=fout)
+print('</font>', file=fout)
 
 fin.close()
 fout.close()
