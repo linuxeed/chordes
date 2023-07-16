@@ -2,26 +2,24 @@ import sys
 
 NOTES = "abcdefgh"
 
-def getChordURL(chord):
-	chord = chord.lower()
-	
-	res = 'https://tuneronline.ru/images/chords/guitar/max/'
-	for char in chord:
-		if char == '#' or char == '♯':
+
+def get_chord_url(chord):
+	res = ''
+	for char in chord.lower():
+		if char in ('#', '♯'):
 			res += 'diez'
-		elif char == 'b' or char == '♭':
+		elif char in ('b', '♭'):
 			res += 'b'
 		else:
 			res += char
-	res += '.jpg'
-	
-	return res
+	return f'https://tuneronline.ru/images/chords/guitar/max/{res}.jpg'
+
 
 if len(sys.argv) <= 2:
 	print('usage: song.txt song.html')
 	exit(0)
 
-fin  = open(sys.argv[1], 'r')
+fin = open(sys.argv[1], 'r')
 fout = open(sys.argv[2], 'w')
 
 print('<meta charset="utf-8">', file=fout)
@@ -44,11 +42,11 @@ for line in fin:
 	for word in line.split():
 		brackets = word[0] == '(' and word[-1] == ')'
 		if brackets:
-			word = word[1:-2]
+			word = word[1:-1]
 			print('(', file=fout)
 		
 		if word[0].lower() in NOTES:
-			print(f'<img src="{getChordURL(word)}" height="40">', file=fout)
+			print(f'<img src="{get_chord_url(word)}" height="40">', file=fout)
 		
 		if brackets:
 			print(')', file=fout)
